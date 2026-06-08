@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endocrine Society 2011 뇌하수체 우연종 가이드라인</title>
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --surface: #ffffff;
+    --surface2: #f0f2f5;
+    --border: #d0d7de;
+    --accent: #1d4e8f;
+    --accent2: #1a3d6e;
+    --green: #1a7f37;
+    --yellow: #9a6700;
+    --red: #cf222e;
+    --orange: #bc4c00;
+    --text: #1f2328;
+    --text2: #57606a;
+    --rec-strong: #1a7f37;
+    --rec-weak: #0550ae;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 8px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner { width: 100%; max-width: 960px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .logo-badge {
+    background: var(--accent);
+    color: #fff; font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px;
+  }
+  header h1 { font-size: 19px; font-weight: 700; color: var(--text); }
+  .source-link { color: var(--accent2); font-size: 11px; text-decoration: none; }
+  .source-link:hover { text-decoration: underline; }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex; justify-content: center;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-bar-inner { width: 100%; max-width: 960px; display: flex; align-items: center; justify-content: center; gap: 2px; }
+  .tab {
+    padding: 8px 13px; font-size: 12px; color: var(--text2);
+    cursor: pointer; border-bottom: 2px solid transparent;
+    white-space: nowrap; transition: color .15s, border-color .15s; user-select: none;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent2); border-bottom-color: var(--accent2); font-weight: 600; }
+  .tab-abbr-wrap { display: flex; align-items: center; padding: 4px 6px; margin-left: 4px; flex-shrink: 0; position: relative; }
+
+  /* ── MAIN ── */
+  .main { padding: 12px 16px; max-width: 960px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 680px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  /* ── CARD ── */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .card-header {
+    background: var(--surface2); padding: 8px 12px;
+    font-size: 12px; font-weight: 600; color: var(--text2);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; user-select: none;
+  }
+  .card-header .ch-title { display: flex; align-items: center; gap: 8px; }
+  .card-header .toggle { font-size: 14px; transition: transform .2s; }
+  .card-header.open .toggle { transform: rotate(180deg); }
+  .card-body { padding: 10px 12px; }
+  .card-body.collapsed { display: none; }
+
+  /* ── STAT ── */
+  .stat-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .stat-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; flex: 1; text-align: center; min-width: 90px; }
+  .stat-val { font-size: 20px; font-weight: 700; }
+  .stat-lbl { font-size: 10px; color: var(--text2); margin-top: 2px; line-height: 1.35; }
+
+  /* ── GRADE BADGES (GRADE system) ── */
+  .grade { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; white-space: nowrap; position: relative; cursor: help; }
+  .grade-rec  { background: #dafbe1; color: #116329; border: 1px solid #1a7f37; }
+  .grade-sug  { background: #ddf4ff; color: #0550ae; border: 1px solid #0550ae; }
+  .grade-vl   { background: #fff8c5; color: #7d4e00; border: 1px solid #9a6700; }
+  .grade-lo   { background: #ffe4c4; color: #bc4c00; border: 1px solid #bc4c00; }
+  .grade-mo   { background: #ddf4ff; color: #0550ae; border: 1px solid #0550ae; }
+  .grade-hi   { background: #dafbe1; color: #116329; border: 1px solid #1a7f37; }
+  /* tooltip */
+  .grade::after {
+    content: attr(data-tip); display: none;
+    position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    background: #1f2328; color: #e6edf3; font-size: 11px; font-weight: 400; line-height: 1.5;
+    padding: 6px 10px; border-radius: 6px; white-space: pre-wrap; max-width: 240px;
+    z-index: 500; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,.25);
+    text-transform: none; letter-spacing: 0;
+  }
+  .grade::before {
+    content: ''; display: none;
+    position: absolute; bottom: calc(100% + 1px); left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent; border-top-color: #1f2328; z-index: 501; pointer-events: none;
+  }
+  .grade:hover::after, .grade:hover::before { display: block; }
+
+  /* ── REC LIST ── */
+  .rec-list { list-style: none; }
+  .rec-item { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-start; }
+  .rec-item:last-child { border-bottom: none; }
+  .rec-num { font-size: 10px; font-weight: 700; color: var(--text2); white-space: nowrap; margin-top: 2px; min-width: 28px; }
+  .rec-badges { display: flex; gap: 4px; flex-shrink: 0; margin-top: 1px; flex-wrap: nowrap; }
+  .rec-text { font-size: 12px; color: var(--text); line-height: 1.6; }
+  .rec-text strong { color: var(--accent2); }
+
+  /* ── ALERT ── */
+  .alert { padding: 8px 12px; border-radius: 6px; font-size: 12px; margin: 8px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.55; }
+  .alert-danger  { background: #ffebe9; border-left: 3px solid var(--red);    color: #82071e; }
+  .alert-info    { background: #ddf4ff; border-left: 3px solid #0550ae;       color: #0550ae; }
+  .alert-warn    { background: #fff8c5; border-left: 3px solid var(--yellow); color: #7d4e00; }
+  .alert-success { background: #dafbe1; border-left: 3px solid var(--green);  color: #116329; }
+  .alert-blue    { background: #e8f0fa; border-left: 3px solid var(--accent); color: var(--accent2); }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .tbl th { background: var(--surface2); color: var(--text2); padding: 6px 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600; text-align: left; }
+  .tbl td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: rgba(0,0,0,.02); }
+  .tbl .sec-row td { background: var(--surface2); font-weight: 600; color: var(--accent2); }
+
+  /* ── ACCORDION ── */
+  .acc { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; overflow: hidden; }
+  .acc-hdr { background: var(--surface2); padding: 7px 12px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .acc-hdr:hover { background: #e5e9ef; }
+  .acc-toggle { font-size: 11px; color: var(--text2); transition: transform .2s; }
+  .acc-hdr.open .acc-toggle { transform: rotate(180deg); }
+  .acc-body { display: none; padding: 10px 12px; font-size: 12px; line-height: 1.65; }
+  .acc-body ul { padding-left: 16px; margin: 4px 0; }
+  .acc-body li { margin-bottom: 3px; }
+
+  /* ── BADGE ── */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+  .badge-micro { background: #e0f4f1; color: #0f5549; border: 1px solid #1a7f6e; }
+  .badge-macro { background: #fce8eb; color: #9b1c2e; border: 1px solid #9b1c2e; }
+  .badge-surg  { background: #ffebe9; color: #82071e; }
+  .badge-obs   { background: #dafbe1; color: #116329; }
+
+  /* ── PILL ── */
+  .pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+  .pill-strong { background: #dafbe1; color: var(--green); }
+  .pill-weak   { background: #ddf4ff; color: #0550ae; }
+
+  /* ── FLOW ── */
+  .flow-box { border: 1.5px solid var(--border); border-radius: 6px; padding: 7px 12px; font-size: 11px; text-align: center; line-height: 1.4; font-weight: 600; background: var(--surface); }
+  .flow-box.blue   { border-color: var(--accent); background: #e8f0fa; color: var(--accent2); }
+  .flow-box.green  { border-color: #1a7f37; background: #dafbe1; color: #116329; }
+  .flow-box.yellow { border-color: #9a6700; background: #fff8c5; color: #7d4e00; }
+  .flow-box.red    { border-color: var(--red); background: #ffebe9; color: #82071e; }
+  .flow-box.gray   { border-color: var(--border); background: var(--surface2); color: var(--text); }
+  .flow-arrow { text-align: center; font-size: 16px; color: var(--text2); margin: 2px 0; line-height: 1; }
+  .flow-row   { display: flex; gap: 8px; align-items: flex-start; justify-content: center; margin: 4px 0; }
+  .flow-row .flow-box { flex: 1; }
+
+  /* ── ABBR ── */
+  .abbr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px; }
+  .abbr-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; }
+  .abbr-term { font-weight: 700; color: var(--accent2); font-size: 12px; font-family: 'Courier New', monospace; }
+  .abbr-def  { font-size: 11px; color: var(--text2); line-height: 1.45; }
+
+  /* ── MRI SCHEDULE ── */
+  .mri-box { border-radius: 6px; padding: 10px 12px; font-size: 12px; text-align: center; }
+  .mri-micro { background: #e0f4f1; border: 1.5px solid #1a7f6e; }
+  .mri-macro { background: #fce8eb; border: 1.5px solid #9b1c2e; }
+  .mri-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #c8d0d9; border-radius: 3px; }
+  .sec-sep { height: 1px; background: var(--border); margin: 10px 0; }
+  small { color: var(--text2); font-size: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:10px;justify-content:center">
+      <span class="logo-badge">Endocrine Society 2011</span>
+      <h1>뇌하수체 우연종(Pituitary Incidentaloma) 진료지침</h1>
+    </div>
+    <div style="text-align:center;margin-top:3px;line-height:1.6">
+      <a href="https://doi.org/10.1210/jc.2010-1048" class="source-link" target="_blank">J Clin Endocrinol Metab 2011;96(4):894–904 (Freda PU et al.) ↗</a>
+      <span style="color:var(--text2);font-size:11px"> · The Endocrine Society · 2011</span><br>
+      <span style="font-size:10px;color:var(--text2);font-style:italic">This tool is not officially endorsed by The Endocrine Society</span>
+    </div>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <div class="tab active" onclick="showTab('overview')">🏠 개요</div>
+    <div class="tab" onclick="showTab('initial')">🔬 초기 평가</div>
+    <div class="tab" onclick="showTab('followup')">📅 추적관찰</div>
+    <div class="tab" onclick="showTab('surgery')">🔪 수술 적응증</div>
+    <div class="tab" onclick="showTab('flowchart')">🗺️ 알고리즘</div>
+    <div class="tab-abbr-wrap">
+      <div style="position:relative;display:flex;align-items:center;flex-shrink:0">
+        <span style="position:absolute;left:8px;color:var(--text2);font-size:12px;pointer-events:none">🔍</span>
+        <input id="abbr-input" type="text" placeholder="약어 검색" oninput="filterAbbr(this.value)"
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 8px 4px 26px;color:var(--text);font-size:12px;width:130px;outline:none;"
+          onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+        <span id="abbr-count" style="position:absolute;right:7px;font-size:10px;color:var(--text2);pointer-events:none"></span>
+      </div>
+      <div id="abbr-dropdown" style="display:none;position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px;width:440px;max-height:360px;overflow-y:auto;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.12)">
+        <div id="abbr-grid-drop" style="display:grid;grid-template-columns:1fr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══════ TAB 1: 개요 ══════ -->
+<div id="tab-overview" class="panel active">
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-val" style="color:var(--accent2)">10.6%</div><div class="stat-lbl">부검 시 뇌하수체 선종 발견률</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--orange)">10–38%</div><div class="stat-lbl">MRI 스크리닝 시 미세우연종</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--red)">24%</div><div class="stat-lbl">대형우연종 추적 중 성장</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--green)">10.6%</div><div class="stat-lbl">미세우연종 추적 중 성장</div></div>
+  </div>
+
+  <!-- 정의 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🔑</span> 정의·원인·역학</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-blue">
+        <span>📌</span>
+        <div><strong>뇌하수체 우연종(Pituitary Incidentaloma)</strong> = 뇌하수체 병변이 의심되지 않는 상황에서 시행된 영상 검사(두통·외상 등)에서 우연히 발견된 뇌하수체 병변.<br>
+        <strong>미세우연종(Microincidentaloma)</strong>: &lt;1 cm / <strong>대형우연종(Macroincidentaloma)</strong>: ≥1 cm</div>
+      </div>
+
+      <div class="grid2" style="margin-top:8px">
+        <div>
+          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">원인 및 조직학적 분포</div>
+          <table class="tbl">
+            <tr><th>진단</th><th>비율</th></tr>
+            <tr><td>뇌하수체 선종 (전체)</td><td>~91%</td></tr>
+            <tr><td>— 비기능성 (성선자극호르몬세포 기원)</td><td>대다수</td></tr>
+            <tr><td>— 무증상 분비성 선종</td><td>일부</td></tr>
+            <tr><td>Rathke's cleft cyst</td><td>~4%</td></tr>
+            <tr><td>두개인두종(Craniopharyngioma)</td><td>~2%</td></tr>
+            <tr><td>기타 비뇌하수체 병변</td><td>~3%</td></tr>
+          </table>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">역학 데이터</div>
+          <table class="tbl">
+            <tr><th>자료원</th><th>유병률</th></tr>
+            <tr><td>부검 연구 (복합)</td><td>평균 10.6%</td></tr>
+            <tr><td>CT 두부영상 (두개 증상)</td><td>미세: 4–20%</td></tr>
+            <tr><td>MRI 두부영상</td><td>미세: 10–38%</td></tr>
+            <tr><td>대형 우연종 (CT)</td><td>0.2%</td></tr>
+            <tr><td>대형 우연종 (MRI 집단연구)</td><td>0.16%</td></tr>
+            <tr><td>복합 시리즈 중 대형 우연종</td><td>45% (353명 중 160명)</td></tr>
+          </table>
+          <div class="alert alert-warn" style="margin-top:6px"><span>⚠️</span><div>소아 자료 없음 — 본 가이드라인은 <strong>성인만 대상</strong>.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 핵심 요약 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📋</span> 3대 핵심 권고 요약</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="grid3" style="gap:8px">
+        <div style="background:#e8f0fa;border:1.5px solid var(--accent);border-radius:8px;padding:10px">
+          <div style="font-weight:700;color:var(--accent2);font-size:12px;margin-bottom:6px">1️⃣ 초기 평가 (1.0)</div>
+          <ul style="font-size:11px;padding-left:14px;line-height:2">
+            <li>병력·신체검진 (호르몬과잉·뇌하수체기능저하)</li>
+            <li><strong>호르몬 과잉</strong> 선별 검사 (모든 환자)</li>
+            <li><strong>뇌하수체기능저하</strong> 선별 검사</li>
+            <li>시신경/교차 인접 시 <strong>시야 검사</strong></li>
+            <li>CT 발견 시 <strong>MRI 재평가</strong></li>
+          </ul>
+        </div>
+        <div style="background:#e0f4f1;border:1.5px solid #1a7f6e;border-radius:8px;padding:10px">
+          <div style="font-weight:700;color:#0f5549;font-size:12px;margin-bottom:6px">2️⃣ 추적관찰 (2.0)</div>
+          <ul style="font-size:11px;padding-left:14px;line-height:2">
+            <li>대형: <strong>6개월</strong> 후 MRI → 이후 매년</li>
+            <li>미세: <strong>1년</strong> 후 MRI → 1–2년 간격</li>
+            <li>3년 후 변화 없으면 점차 간격 연장</li>
+            <li>대형: 6개월·매년 내분비 추적</li>
+            <li>크기 증가 시 조기 재평가</li>
+          </ul>
+        </div>
+        <div style="background:#fce8eb;border:1.5px solid #9b1c2e;border-radius:8px;padding:10px">
+          <div style="font-weight:700;color:#9b1c2e;font-size:12px;margin-bottom:6px">3️⃣ 수술 적응증 (3.0)</div>
+          <ul style="font-size:11px;padding-left:14px;line-height:2">
+            <li><strong>강권고</strong>: 시야결손, 압박증상, 뇌하수체 졸중+시각장애</li>
+            <li><strong>강권고</strong>: 시신경/교차 인접</li>
+            <li><strong>강권고</strong>: 프롤락틴종 외 분비성 종양</li>
+            <li><strong>약권고</strong>: 의미있는 성장, 기능저하, 두통</li>
+            <li><strong>약권고</strong>: 임신 계획 + 시신경 인접</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 호르몬 과잉 빈도 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📊</span> 우연종에서 호르몬 이상 빈도</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <table class="tbl">
+        <tr><th>호르몬 이상</th><th>빈도</th><th>임상적 의의</th></tr>
+        <tr class="sec-row"><td colspan="3">호르몬 과잉</td></tr>
+        <tr><td>고프롤락틴혈증 (미세)</td><td>5/42명 (초기), 0/22명 (추적)</td><td>도파민 작용제 치료 가능</td></tr>
+        <tr><td>프롤락틴종 (복합)</td><td>7/46명</td><td>약물치료 우선</td></tr>
+        <tr><td>무증상 GH 과잉 (IGF-1↑)</td><td>1/11 거대우연종 (9%)</td><td>조기 수술로 완치 가능</td></tr>
+        <tr><td>ACTH 과잉 (무증상)</td><td>부검 13.8% ACTH 양성</td><td>임상 의심 시 선별</td></tr>
+        <tr class="sec-row"><td colspan="3">뇌하수체기능저하</td></tr>
+        <tr><td>성선자극호르몬 결핍</td><td>최대 30%</td><td>가장 흔한 결핍</td></tr>
+        <tr><td>갑상선 축 결핍</td><td>최대 28%</td><td>Free T4 저하 + TSH 정상/저하</td></tr>
+        <tr><td>부신 축 결핍 (ACTH/cortisol)</td><td>최대 18%</td><td>치료 안 하면 위험</td></tr>
+        <tr><td>GH 결핍</td><td>최대 8%</td><td>저하된 IGF-1 → 추가 검사</td></tr>
+        <tr><td>복합 연구 (66명)</td><td>7/66명 전반적 기능저하</td><td>대형 우연종에서 더 흔함</td></tr>
+      </table>
+      <div class="alert alert-info" style="margin-top:8px"><span>ℹ️</span><div>메타분석: 연간 2.4%에서 새로운 내분비 기능장애 발생.</div></div>
+    </div>
+  </div>
+
+</div><!-- /overview -->
+
+
+<!-- ══════ TAB 2: 초기 평가 ══════ -->
+<div id="tab-initial" class="panel">
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📋</span> 1.0 초기 평가 권고안 (R.1.1–1.1.4)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul class="rec-list">
+
+        <li class="rec-item">
+          <span class="rec-num">1.1</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+          </div>
+          <div class="rec-text">
+            뇌하수체 우연종 환자: <strong>완전한 병력청취 및 신체검진</strong>.<br>
+            뇌하수체기능저하 증상 및 호르몬 과잉 증후군 평가 포함.
+            <div style="margin-top:4px"><span class="badge badge-micro">미세우연종</span> <span class="badge badge-macro">대형우연종</span> 모두 해당.</div>
+          </div>
+        </li>
+
+        <li class="rec-item">
+          <span class="rec-num">1.1.1</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+            <span class="grade grade-vl" data-tip="증거 수준: 매우 낮음 ⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text">
+            증상 유무에 무관하게 <strong>모든 환자</strong>: 호르몬 과잉에 대한 임상·검사실 평가 시행.<br>
+            <div class="acc" style="margin-top:6px">
+              <div class="acc-hdr" onclick="toggleAcc(this)"><span>검사 항목 (필수)</span><span class="acc-toggle">▾</span></div>
+              <div class="acc-body">
+                <table class="tbl">
+                  <tr><th>호르몬</th><th>검사</th><th>비고</th></tr>
+                  <tr><td><strong>프롤락틴</strong></td><td>혈청 프롤락틴<br><small>대형 종양: 희석 프롤락틴 측정 (hook effect 배제)</small></td><td>모든 환자 필수</td></tr>
+                  <tr><td><strong>GH 과잉</strong></td><td>혈청 IGF-1</td><td>상승 시 추가 GH 과잉 평가</td></tr>
+                  <tr><td><strong>ACTH (쿠싱)</strong></td><td>임상 의심 시 야간 코르티솔 등 선별<br><small>(Task Force 의견 분분 — 전원 선별 vs 임상 의심 시만)</small></td><td>고위험군 우선</td></tr>
+                </table>
+                <div class="alert alert-warn" style="margin-top:6px"><span>⚠️</span><div>고프롤락틴혈증이 종양(프롤락틴종)이 아닌 줄기 압박(stalk compression)에 의한 것일 수 있음 → 도파민 작용제 투여해도 종양 축소 불기대; <strong>MRI 추적 필수</strong>.</div></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="rec-item">
+          <span class="rec-num">1.1.2</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+            <span class="grade grade-vl" data-tip="증거 수준: 매우 낮음 ⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text">
+            증상 유무에 무관하게 <strong>뇌하수체기능저하</strong>에 대한 임상·검사실 평가 시행.
+            <div class="acc" style="margin-top:6px">
+              <div class="acc-hdr" onclick="toggleAcc(this)"><span>뇌하수체기능저하 평가 검사 항목</span><span class="acc-toggle">▾</span></div>
+              <div class="acc-body">
+                <table class="tbl">
+                  <tr><th>축</th><th>최소 선별</th><th>확진 추가 검사</th></tr>
+                  <tr><td>갑상선 축</td><td>Free T4 (+ TSH)</td><td>—</td></tr>
+                  <tr><td>부신 축</td><td>아침 코르티솔</td><td>저하 시 자극검사</td></tr>
+                  <tr><td>성선 축 (남성)</td><td>테스토스테론, LH, FSH</td><td>저 테스토스테론 + 낮은/정상 LH → 중추성</td></tr>
+                  <tr><td>성선 축 (폐경여성)</td><td>LH, FSH</td><td>낮은 LH/FSH → 뇌하수체 기능저하</td></tr>
+                  <tr><td>GH 축</td><td>IGF-1</td><td>저하 또는 임상 의심 → GH 자극검사</td></tr>
+                </table>
+                <div class="alert alert-info" style="margin-top:6px"><span>💡</span><div>대형 우연종 및 6–9 mm 이상 큰 미세우연종에서 기능저하 위험 높음. 소형 미세우연종에서는 선별 필요성 낮음 (단, 완전히 배제 불가).</div></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="rec-item">
+          <span class="rec-num">1.1.3</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+            <span class="grade grade-vl" data-tip="증거 수준: 매우 낮음 ⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text">
+            MRI에서 <strong>시신경 또는 시신경 교차에 인접하거나 압박하는</strong> 우연종: 시각 증상이 없더라도 <strong>공식 시야(VF) 검사</strong> 시행.<br>
+            <small>— 연구에서 15% 또는 5%의 환자에서 무증상 VF 이상 발견됨.</small>
+          </div>
+        </li>
+
+        <li class="rec-item">
+          <span class="rec-num">1.1.4</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+            <span class="grade grade-vl" data-tip="증거 수준: 매우 낮음 ⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text">
+            CT로만 발견된 우연종: 가능하면 <strong>MRI 재평가</strong>로 병변 성격·범위 정확히 파악.<br>
+            <small>MRI 프로토콜: gadolinium 전후 세절 (fine-cut) 뇌하수체 특화 프로토콜. Gadolinium 전 신기능 확인.</small>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <!-- MEN 관련 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🧬</span> 특수 상황: 가족력 및 MEN 증후군</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <div class="alert alert-warn">
+        <span>⚠️</span>
+        <div>개인력 또는 가족력에서 <strong>다발성 내분비 종양(MEN) 증후군</strong>이 의심되는 경우: 해당 증후군에 맞는 추가 선별 및 추적 관찰 시행.<br>
+        특히 <strong>MEN1</strong>: 부갑상선·췌장·뇌하수체 종양 복합. 뇌하수체 우연종 발견 시 MEN1 배제 필요.</div>
+      </div>
+      <table class="tbl" style="margin-top:8px">
+        <tr><th>증후군</th><th>뇌하수체 관련</th><th>추가 선별</th></tr>
+        <tr><td>MEN1</td><td>뇌하수체 선종 (주로 프롤락틴종)</td><td>혈청 칼슘, PTH, 췌장 호르몬</td></tr>
+        <tr><td>FIPA (가족성 단독 뇌하수체 선종)</td><td>AIP 유전자 변이</td><td>가족 스크리닝</td></tr>
+        <tr><td>Carney complex</td><td>GH 과잉 선종</td><td>심장 점액종, 피부 색소 이상</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /initial -->
+
+
+<!-- ══════ TAB 3: 추적관찰 ══════ -->
+<div id="tab-followup" class="panel">
+
+  <!-- MRI 추적 스케줄 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🖼️</span> MRI 추적관찰 스케줄 (R.2.1.1)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="grid2" style="gap:10px;margin-bottom:8px">
+        <div class="mri-box mri-micro">
+          <div class="mri-title" style="color:#0f5549">🟢 미세우연종 (&lt;1 cm)</div>
+          <table class="tbl" style="background:transparent">
+            <tr><th>시점</th><th>검사</th></tr>
+            <tr><td>초기 MRI 후 <strong>1년</strong></td><td>MRI (강권고 ⊕○○○)</td></tr>
+            <tr><td>이후 <strong>1–2년 간격</strong> × 3년</td><td>MRI (약권고)</td></tr>
+            <tr><td>3년 후 변화 없으면</td><td>점차 간격 연장</td></tr>
+          </table>
+          <div class="alert alert-success" style="margin-top:6px"><span>✅</span><div>미세우연종에서 VF 이상 및 새 기능저하 발생 없었음 (기존 연구). 성장률 1.7%/년.</div></div>
+        </div>
+        <div class="mri-box mri-macro">
+          <div class="mri-title" style="color:#9b1c2e">🔴 대형우연종 (≥1 cm)</div>
+          <table class="tbl" style="background:transparent">
+            <tr><th>시점</th><th>검사</th></tr>
+            <tr><td>초기 MRI 후 <strong>6개월</strong></td><td>MRI (강권고 ⊕○○○)</td></tr>
+            <tr><td>이후 <strong>매년</strong> × 3년</td><td>MRI (약권고)</td></tr>
+            <tr><td>3년 후 변화 없으면</td><td>격년 → 점차 연장</td></tr>
+          </table>
+          <div class="alert alert-warn" style="margin-top:6px"><span>⚠️</span><div>대형우연종: 24% 성장, 8% VF 이상 발생, 2% 뇌하수체 졸중 발생 (기존 연구). 성장률 8.2%/년.</div></div>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <span>💡</span>
+        <div>일부 Task Force 위원: <strong>6–9 mm 큰 미세우연종</strong>은 대형우연종처럼 6개월 MRI 및 내분비 추적 고려. 크기 연속체(continuum)이므로 1 cm 경계가 절대적이지 않음.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시야 추적 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>👁️</span> 시야(VF) 추적관찰 (R.2.1.2)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul class="rec-list">
+        <li class="rec-item">
+          <span class="rec-num">2.1.2a</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+            <span class="grade grade-vl" data-tip="⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text">추적 영상에서 시신경/교차를 <strong>인접하거나 압박하도록 성장</strong>한 경우: VF 검사 시행.</div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">2.1.2b</span>
+          <div class="rec-badges">
+            <span class="grade grade-sug" data-tip="Suggest (약권고)">SUGGEST</span>
+            <span class="grade grade-vl" data-tip="⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text">시신경 교차와 <strong>멀리 있고</strong> 새 증상 없으며 MRI로 밀접히 추적 중인 환자: VF 검사 불필요.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 내분비 추적 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🧪</span> 내분비 기능 추적관찰 (R.2.1.3)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul class="rec-list">
+        <li class="rec-item">
+          <span class="rec-num">2.1.3a</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+            <span class="grade grade-vl" data-tip="⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text"><strong>대형우연종</strong>: 초기 검사 후 <strong>6개월</strong> 및 이후 <strong>매년</strong> 뇌하수체기능저하 임상·검사실 평가.<br>
+          <small>단, 기능저하는 주로 종양 크기 증가와 함께 발생함.</small></div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">2.1.3b</span>
+          <div class="rec-badges">
+            <span class="grade grade-sug" data-tip="Suggest (약권고)">SUGGEST</span>
+            <span class="grade grade-vl" data-tip="⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text"><strong>미세우연종</strong>으로 임상상·병력·MRI에 변화 없는 환자: 뇌하수체기능저하 반복 검사 <em>불필요</em>.<br>
+          <small>기존 연구: 추적된 미세우연종에서 뇌하수체 기능 변화 없음.</small></div>
+        </li>
+      </ul>
+      <div class="alert alert-warn" style="margin-top:8px">
+        <span>⚠️</span>
+        <div>새 기능저하는 대부분 종양 성장 시 발생하나, 성장 없이도 발생 가능. 대형우연종에서 추적 중 새 기능저하: 1/7명 (Reincke 1990), 3/28명 (Dekkers 2007) — 모두 종양 크기 증가와 연관.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R.2.2 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🚨</span> R.2.2 증상 발생 또는 크기 증가 시</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul class="rec-list">
+        <li class="rec-item">
+          <span class="rec-num">2.2</span>
+          <div class="rec-badges">
+            <span class="grade grade-rec" data-tip="Recommend (강권고)">RECOMMEND</span>
+            <span class="grade grade-vl" data-tip="⊕○○○">⊕○○○</span>
+          </div>
+          <div class="rec-text">우연종에 관련 가능한 <strong>새 증상·징후 발생</strong> 또는 <strong>MRI에서 크기 증가</strong> 확인 시: 임상적으로 필요에 따라 더 자주 또는 더 상세한 평가 시행.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 추적관찰 요약표 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📊</span> 추적관찰 전략 요약표</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <table class="tbl">
+        <tr><th>항목</th><th><span class="badge badge-micro">미세우연종 &lt;1cm</span></th><th><span class="badge badge-macro">대형우연종 ≥1cm</span></th></tr>
+        <tr><td>초기 MRI 후 첫 영상</td><td>1년 후</td><td><strong>6개월 후</strong></td></tr>
+        <tr><td>이후 영상 간격</td><td>1–2년 × 3년 → 점차 연장</td><td>매년 × 3년 → 격년 → 점차 연장</td></tr>
+        <tr><td>VF 검사</td><td>시신경 인접 시에만</td><td>시신경 인접 시 6개월·매년</td></tr>
+        <tr><td>내분비 추적</td><td>임상·MRI 변화 없으면 불필요</td><td>6개월 후, 이후 매년</td></tr>
+        <tr><td>성장 시 처치</td><td>조기 재평가, 수술 고려</td><td>조기 재평가, 수술 강력 고려</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /followup -->
+
+
+<!-- ══════ TAB 4: 수술 적응증 ══════ -->
+<div id="tab-surgery" class="panel">
+
+  <!-- 강권고 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🔴</span> R.3.1 수술 강권고 적응증</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-danger" style="margin-bottom:8px">
+        <span>⚠️</span><div>아래 조건 중 하나 이상 해당 시 <strong>수술 강권고 (Recommend, 1|⊕○○○)</strong>.</div>
+      </div>
+      <ul class="rec-list">
+        <li class="rec-item">
+          <span class="rec-num">①</span>
+          <div class="rec-badges"><span class="grade grade-rec">RECOMMEND</span></div>
+          <div class="rec-text"><strong>시야결손 (VF deficit)</strong> — 종양에 의한 것.</div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">②</span>
+          <div class="rec-badges"><span class="grade grade-rec">RECOMMEND</span></div>
+          <div class="rec-text"><strong>기타 시각 이상</strong>: 안구운동마비(ophthalmoplegia) 등 종양 압박에 의한 시각·신경학적 이상.</div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">③</span>
+          <div class="rec-badges"><span class="grade grade-rec">RECOMMEND</span></div>
+          <div class="rec-text">MRI에서 <strong>시신경 또는 시신경 교차에 인접하거나 압박</strong>하는 병변.<br>
+          <small>시각 이상 없더라도 향후 시력 위협 위험 있어 수술 권고.</small></div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">④</span>
+          <div class="rec-badges"><span class="grade grade-rec">RECOMMEND</span></div>
+          <div class="rec-text"><strong>뇌하수체 졸중(Pituitary apoplexy) + 시각 장애</strong>.<br>
+          <small>시각 장애 없는 졸중: 보존적 추적 가능 (30명 후향 연구; 보존 vs 수술 군 장기 기능저하 유사).</small></div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">⑤</span>
+          <div class="rec-badges"><span class="grade grade-rec">RECOMMEND</span></div>
+          <div class="rec-text"><strong>프롤락틴종 외 분비성 종양</strong> (GH 과잉, ACTH 과잉 등).<br>
+          <small>→ Endocrine Society 및 Pituitary Society 해당 가이드라인에 따름.</small></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 약권고 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🟡</span> R.3.2 수술 약권고(고려) 적응증</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-warn" style="margin-bottom:8px">
+        <span>💡</span><div>아래 조건 시 수술 <strong>고려 약권고 (Suggest, 2|⊕○○○)</strong>. 환자 상황·나이·수술 위험도 개별화 판단.</div>
+      </div>
+      <ul class="rec-list">
+        <li class="rec-item">
+          <span class="rec-num">①</span>
+          <div class="rec-badges"><span class="grade grade-sug">SUGGEST</span></div>
+          <div class="rec-text"><strong>임상적으로 유의한 우연종 성장</strong>.<br>
+          <small>특정 크기 기준보다 성장 <em>방향과 패턴</em>이 중요. 예: 시신경 교차 쪽으로 성장하는 1 mm 성장 → 유의함.</small></div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">②</span>
+          <div class="rec-badges"><span class="grade grade-sug">SUGGEST</span></div>
+          <div class="rec-text"><strong>내분비 기능 소실(뇌하수체기능저하)</strong>.<br>
+          <small>일부 수술 시리즈에서 기능 회복 보고; 단, 인과관계 불분명. 수술 여부와 무관하게 적절한 호르몬 보충 필수.</small></div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">③</span>
+          <div class="rec-badges"><span class="grade grade-sug">SUGGEST</span></div>
+          <div class="rec-text"><strong>임신 계획 + 시신경 교차 인접 병변</strong>.<br>
+          <small>임신 중 정상 뇌하수체의 유즙분비세포 증식이 종양 압박 위험 증가 → 수술 또는 더 밀접한 추적.</small></div>
+        </li>
+        <li class="rec-item">
+          <span class="rec-num">④</span>
+          <div class="rec-badges"><span class="grade grade-sug">SUGGEST</span></div>
+          <div class="rec-text"><strong>지속적 두통(Unremitting headache)</strong>.<br>
+          <small>경접형동 수술 후 두통 개선 여부는 불확실. 근거 낮음.</small></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 수술 일반 원칙 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🏥</span> 수술 일반 원칙 및 고려사항</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <table class="tbl">
+        <tr><th>고려사항</th><th>세부 내용</th></tr>
+        <tr><td>수술 방법</td><td>경접형동 뇌하수체 수술 (Transsphenoidal surgery) — 표준 접근법</td></tr>
+        <tr><td>외과의 경험</td><td>뇌하수체 수술 경험 풍부한 전문가에서 결과 현저히 우수. 기관·외과의 수술 건수 중요.</td></tr>
+        <tr><td>나이 고려</td><td>젊은 환자: 평생 성장 위험 높아 수술 선호. 고령·수술 고위험군: 면밀한 보존적 추적 고려.</td></tr>
+        <tr><td>수술 합병증</td><td>요붕증, 뇌하수체기능저하 (신규 발생은 드묾). 반드시 환자와 위험-이익 논의.</td></tr>
+        <tr><td>프롤락틴종</td><td>프롤락틴종 → 수술 아닌 <strong>도파민 작용제가 1차 치료</strong>.</td></tr>
+        <tr><td>다학제 회의</td><td>복잡한 사례: 뇌하수체 다학제팀 회의(Pituitary MDT) 활용 권장.</td></tr>
+      </table>
+
+      <div class="alert alert-info" style="margin-top:8px">
+        <span>🏥</span>
+        <div>수술 성공률은 뇌하수체 전문 외과의·팀의 경험에 크게 의존. 가이드라인 적용 전 해당 기관의 전문가 가용성 확인 필수.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 의학적 치료 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>💊</span> 의학적 치료 — 비기능성 우연종</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <div class="alert alert-warn">
+        <span>⚠️</span>
+        <div>뇌하수체 우연종의 의학적 치료는 체계적으로 연구된 적 없어 근거 불충분. 일상적 의학적 치료는 <strong>권고하지 않음</strong>.</div>
+      </div>
+      <table class="tbl" style="margin-top:8px">
+        <tr><th>약제</th><th>효과</th><th>비고</th></tr>
+        <tr><td>카베르골린/브로모크립틴<br>(Dopamine agonist)</td><td>잔존 종양의 8–45%에서 10–62% 수축<br>or 3–14 mm 감소</td><td>비기능성 선종에서 가변적 효과. 프롤락틴종 이외는 줄기압박성 고프롤락틴혈증 치료 가능하나 종양 축소 기대 어려움.</td></tr>
+        <tr><td>소마토스타틴 유사체<br>(Octreotide)</td><td>~5–25% 수축, 12% 증가, 83% 안정화</td><td>1년 이하 치료 데이터. 일상 사용 근거 불충분.</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /surgery -->
+
+
+<!-- ══════ TAB 5: 알고리즘 ══════ -->
+<div id="tab-flowchart" class="panel">
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🗺️</span> 뇌하수체 우연종 평가·치료 알고리즘 (Figure 1 재현)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div style="max-width:600px;margin:0 auto">
+
+        <!-- Step 1 -->
+        <div class="flow-box blue">뇌하수체 우연종 발견<br><small style="font-weight:400">호르몬 과잉·뇌하수체기능저하 평가 (병력·신체검진·혈액검사)<br>시신경 인접 시 VF 검사</small></div>
+        <div class="flow-arrow">↓</div>
+
+        <!-- 기능 분류 -->
+        <div class="flow-row">
+          <div class="flow-box red" style="flex:1">기능성 종양<br>(호르몬 과잉 확인)</div>
+          <div class="flow-box gray" style="flex:1">임상적 비기능성<br>(호르몬 과잉 없음)</div>
+        </div>
+
+        <!-- 기능성 분기 -->
+        <div class="flow-row" style="margin-top:4px">
+          <div style="flex:1">
+            <div class="flow-row">
+              <div class="flow-box yellow" style="font-size:10px">프롤락틴종<br>→ 도파민 작용제</div>
+              <div class="flow-box red" style="font-size:10px">기타 분비성<br>(GH·ACTH 등)<br>→ 수술/치료</div>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div class="flow-arrow">↓</div>
+            <div class="flow-row">
+              <div class="flow-box green" style="font-size:10px">미세우연종<br>(&lt;1 cm)</div>
+              <div class="flow-box red" style="font-size:10px">대형우연종<br>(≥1 cm)ᵇ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 수술 판단 -->
+        <div class="flow-arrow" style="margin-top:4px">↓ 비기능성</div>
+        <div class="flow-box yellow">수술 적응증 판단 (R.3.1–3.2)ᶜ<br><small style="font-weight:400">VF 이상·시신경 인접·졸중+시각장애·의미있는 성장 등</small></div>
+        <div class="flow-row" style="margin-top:4px">
+          <div style="flex:1">
+            <div class="flow-box red" style="font-size:10px">수술 적응증 있음 → <strong>수술</strong></div>
+          </div>
+          <div style="flex:1">
+            <div class="flow-box green" style="font-size:10px">수술 적응증 없음 → <strong>보존적 추적</strong></div>
+          </div>
+        </div>
+
+        <!-- 보존 추적 -->
+        <div class="flow-arrow">↓ 보존적 추적</div>
+        <div class="flow-row">
+          <div class="flow-box" style="flex:1;border-color:#1a7f6e;background:#e0f4f1;font-size:10px">
+            <strong style="color:#0f5549">미세우연종ᶠ</strong><br>
+            MRI 1년 후<br>이후 1–2년 × 3년<br>→ 점차 연장<br>
+            VFᵈ, 내분비ᵉ 필요 시
+          </div>
+          <div class="flow-box" style="flex:1;border-color:#9b1c2e;background:#fce8eb;font-size:10px">
+            <strong style="color:#9b1c2e">대형우연종ᵍ</strong><br>
+            MRI 6개월 후<br>이후 매년 × 3년<br>→ 점차 연장<br>
+            VFᵈ + 내분비ᵉ (6개월·매년)
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box yellow">추적 중 종양 성장 또는 VF 이상<br><small style="font-weight:400">→ 수술 고려 (R.3.2)</small></div>
+
+      </div>
+
+      <div style="margin-top:12px;font-size:10px;color:var(--text2);line-height:1.8">
+        <strong>각주:</strong><br>
+        ᵃ 기저 평가: 호르몬 과잉·기능저하 병력·신체검진·혈액검사<br>
+        ᵇ 큰 미세우연종(6–9 mm)은 대형우연종처럼 관리 가능<br>
+        ᶜ 수술 적응증: VF 이상·기타 시각·신경이상·시신경 인접·졸중+시각장애 (강권고) / 유의한 성장·기능저하·임신 계획·두통 (약권고)<br>
+        ᵈ VF: 시신경 인접하거나 압박 시 시행<br>
+        ᵉ 내분비 기능저하 평가: 기저 및 추적 시 (대형 및 큰 미세우연종 강권고)<br>
+        ᶠ 미세우연종: 1년 후 MRI → 매 1–2년 × 3년 → 점차 연장<br>
+        ᵍ 대형우연종: 6개월 후 MRI → 매년 × 3년 → 점차 연장
+      </div>
+    </div>
+  </div>
+
+  <!-- 핵심 수치 요약 -->
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📊</span> 자연 경과 핵심 데이터 (메타분석 기반)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="grid2" style="gap:10px">
+        <div>
+          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">🔴 대형우연종 (353명 복합 데이터)</div>
+          <table class="tbl">
+            <tr><th>결과</th><th>발생</th></tr>
+            <tr><td>종양 크기 증가</td><td>85/353명 (<strong>24%</strong>)</td></tr>
+            <tr><td>VF 이상 발생</td><td>28명 (<strong>8%</strong>)</td></tr>
+            <tr><td>뇌하수체 졸중</td><td>7/353명 (<strong>2%</strong>);<br>영구 기능저하 대다수, 영구 시각장애 1명</td></tr>
+            <tr><td>성장률 (메타분석)</td><td>8.2%/인년</td></tr>
+          </table>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">🟢 미세우연종 (160명 복합 데이터)</div>
+          <table class="tbl">
+            <tr><th>결과</th><th>발생</th></tr>
+            <tr><td>종양 크기 증가</td><td>17/160명 (<strong>10.6%</strong>)<br>추적 2.3–7년</td></tr>
+            <tr><td>새 VF 이상 발생</td><td><strong>없음</strong> (수술 필요 없었음)</td></tr>
+            <tr><td>새 뇌하수체기능저하</td><td><strong>없음</strong> (기존 연구)</td></tr>
+            <tr><td>성장률 (메타분석)</td><td>1.7%/인년</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="alert alert-info" style="margin-top:8px">
+        <span>📌</span><div>신규 내분비 기능장애 전체: <strong>연간 2.4%</strong> (메타분석, Fernandez-Balsells 2010). 보존적 관찰의 안전성은 대규모 전향적 연구로 추가 확인 필요.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 약어 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📚</span> 주요 약어 모음</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <div id="abbr-main-grid" class="abbr-grid"></div>
+    </div>
+  </div>
+
+</div><!-- /flowchart -->
+
+</div><!-- /main -->
+
+<script>
+const ABBR_DATA = [
+  { term:"ACTH",  def:"Adrenocorticotropic Hormone — 부신피질자극호르몬" },
+  { term:"CT",    def:"Computed Tomography — 전산화 단층촬영" },
+  { term:"DA",    def:"Dopamine Agonist — 도파민 작용제 (Cabergoline, Bromocriptine)" },
+  { term:"FIPA",  def:"Familial Isolated Pituitary Adenoma — 가족성 단독 뇌하수체 선종" },
+  { term:"FSH",   def:"Follicle-Stimulating Hormone — 여포자극호르몬" },
+  { term:"GH",    def:"Growth Hormone — 성장호르몬" },
+  { term:"GHD",   def:"Growth Hormone Deficiency — 성장호르몬 결핍증" },
+  { term:"GRADE", def:"Grading of Recommendations Assessment Development and Evaluation — 권고 등급 평가 체계" },
+  { term:"IGF-1", def:"Insulin-like Growth Factor 1 — 인슐린유사성장인자-1 (GH 과잉 선별)" },
+  { term:"LH",    def:"Luteinizing Hormone — 황체형성호르몬" },
+  { term:"MEN1",  def:"Multiple Endocrine Neoplasia type 1 — 다발성 내분비 종양 1형" },
+  { term:"MDT",   def:"Multidisciplinary Team — 다학제팀" },
+  { term:"MRI",   def:"Magnetic Resonance Imaging — 자기공명영상" },
+  { term:"PTH",   def:"Parathyroid Hormone — 부갑상선호르몬" },
+  { term:"Rathke's cleft cyst", def:"Rathke 열구 낭종 — 뇌하수체 우연종의 일부를 차지하는 양성 낭성 병변" },
+  { term:"TSH",   def:"Thyroid-Stimulating Hormone — 갑상선자극호르몬" },
+  { term:"VF",    def:"Visual Field — 시야 (시야 검사: 공식적인 자동시야계 검사)" },
+  { term:"대형우연종", def:"Macroincidentaloma — 최대 직경 ≥1 cm인 뇌하수체 우연종" },
+  { term:"미세우연종", def:"Microincidentaloma — 최대 직경 &lt;1 cm인 뇌하수체 우연종" },
+  { term:"뇌하수체 졸중", def:"Pituitary Apoplexy — 뇌하수체 종양 내 급성 출혈 또는 경색. 심한 두통·시각장애·뇌하수체기능저하 동반 가능" },
+  { term:"줄기 압박", def:"Stalk compression — 종양이 뇌하수체 줄기를 압박하여 발생하는 고프롤락틴혈증. 프롤락틴종과 감별 필요" },
+];
+
+function renderAbbrMain() {
+  const g = document.getElementById('abbr-main-grid');
+  if (g) g.innerHTML = ABBR_DATA.map(a =>
+    `<div class="abbr-item"><div class="abbr-term">${a.term}</div><div class="abbr-def">${a.def}</div></div>`
+  ).join('');
+}
+renderAbbrMain();
+
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleCard(hdr) {
+  hdr.classList.toggle('open');
+  hdr.nextElementSibling.classList.toggle('collapsed');
+}
+function toggleAcc(hdr) {
+  hdr.classList.toggle('open');
+  const b = hdr.nextElementSibling;
+  b.style.display = b.style.display === 'block' ? 'none' : 'block';
+}
+function filterAbbr(q) {
+  const drop = document.getElementById('abbr-dropdown');
+  const grid = document.getElementById('abbr-grid-drop');
+  const cnt  = document.getElementById('abbr-count');
+  q = q.trim().toLowerCase();
+  if (!q) { drop.style.display = 'none'; cnt.textContent = ''; return; }
+  const hits = ABBR_DATA.filter(a =>
+    a.term.toLowerCase().includes(q) || a.def.toLowerCase().includes(q)
+  );
+  cnt.textContent = hits.length || '';
+  if (!hits.length) { drop.style.display = 'none'; return; }
+  drop.style.display = 'block';
+  const inp = document.getElementById('abbr-input');
+  const rect = inp.getBoundingClientRect();
+  drop.style.top  = (rect.bottom + 4) + 'px';
+  drop.style.left = Math.max(8, rect.right - 440) + 'px';
+  grid.innerHTML = hits.map(a =>
+    `<div class="abbr-item"><div class="abbr-term">${a.term}</div><div class="abbr-def">${a.def}</div></div>`
+  ).join('');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.tab-abbr-wrap')) {
+    document.getElementById('abbr-dropdown').style.display = 'none';
+    document.getElementById('abbr-count').textContent = '';
+  }
+});
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card-header:not(.open)').forEach(h => {
+    const b = h.nextElementSibling;
+    if (b) b.classList.add('collapsed');
+  });
+});
+</script>
+</body>
+</html>
