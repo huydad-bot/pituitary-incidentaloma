@@ -20,13 +20,14 @@
     --text2: #57606a;
     --rec-strong: #1a7f37;
     --rec-weak: #0550ae;
+    --fscale: 1;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-size: 13px;
+    font-size: calc(13px * var(--fscale, 1));
     line-height: 1.5;
     min-height: 100vh;
   }
@@ -43,11 +44,11 @@
   .header-inner { width: 100%; max-width: 960px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
   .logo-badge {
     background: var(--accent);
-    color: #fff; font-size: 10px; font-weight: 700;
+    color: #fff; font-size: calc(10px * var(--fscale, 1)); font-weight: 700;
     padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px;
   }
   header h1 { font-size: 19px; font-weight: 700; color: var(--text); }
-  .source-link { color: var(--accent2); font-size: 11px; text-decoration: none; }
+  .source-link { color: var(--accent2); font-size: calc(11px * var(--fscale, 1)); text-decoration: none; }
   .source-link:hover { text-decoration: underline; }
 
   /* ── TABS ── */
@@ -57,9 +58,18 @@
     overflow-x: auto; scrollbar-width: none;
   }
   .tab-bar::-webkit-scrollbar { display: none; }
+  .font-zoom-btn {
+    display: flex; align-items: center; gap: 3px; flex-shrink: 0;
+    margin: 4px 4px 4px 6px; padding: 5px 10px;
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+    color: var(--accent2); font-size: calc(11px * var(--fscale, 1)); font-weight: 700;
+    cursor: pointer; user-select: none; white-space: nowrap; transition: background .15s;
+  }
+  .font-zoom-btn:hover { background: var(--border); }
+  .font-zoom-btn .fz-icon { font-size: calc(12px * var(--fscale, 1)); }
   .tab-bar-inner { width: 100%; max-width: 960px; display: flex; align-items: center; justify-content: center; gap: 2px; }
   .tab {
-    padding: 8px 13px; font-size: 12px; color: var(--text2);
+    padding: 8px 13px; font-size: calc(12px * var(--fscale, 1)); color: var(--text2);
     cursor: pointer; border-bottom: 2px solid transparent;
     white-space: nowrap; transition: color .15s, border-color .15s; user-select: none;
   }
@@ -81,13 +91,13 @@
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
   .card-header {
     background: var(--surface2); padding: 8px 12px;
-    font-size: 12px; font-weight: 600; color: var(--text2);
+    font-size: calc(12px * var(--fscale, 1)); font-weight: 600; color: var(--text2);
     text-transform: uppercase; letter-spacing: 0.5px;
     border-bottom: 1px solid var(--border); cursor: pointer;
     display: flex; align-items: center; justify-content: space-between; user-select: none;
   }
   .card-header .ch-title { display: flex; align-items: center; gap: 8px; }
-  .card-header .toggle { font-size: 14px; transition: transform .2s; }
+  .card-header .toggle { font-size: calc(14px * var(--fscale, 1)); transition: transform .2s; }
   .card-header.open .toggle { transform: rotate(180deg); }
   .card-body { padding: 10px 12px; }
   .card-body.collapsed { display: none; }
@@ -95,11 +105,11 @@
   /* ── STAT ── */
   .stat-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
   .stat-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; flex: 1; text-align: center; min-width: 90px; }
-  .stat-val { font-size: 20px; font-weight: 700; }
-  .stat-lbl { font-size: 10px; color: var(--text2); margin-top: 2px; line-height: 1.35; }
+  .stat-val { font-size: calc(20px * var(--fscale, 1)); font-weight: 700; }
+  .stat-lbl { font-size: calc(10px * var(--fscale, 1)); color: var(--text2); margin-top: 2px; line-height: 1.35; }
 
   /* ── GRADE BADGES (GRADE system) ── */
-  .grade { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; white-space: nowrap; position: relative; cursor: help; }
+  .grade { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: calc(10px * var(--fscale, 1)); font-weight: 700; white-space: nowrap; position: relative; cursor: help; }
   .grade-rec  { background: #dafbe1; color: #116329; border: 1px solid #1a7f37; }
   .grade-sug  { background: #ddf4ff; color: #0550ae; border: 1px solid #0550ae; }
   .grade-vl   { background: #fff8c5; color: #7d4e00; border: 1px solid #9a6700; }
@@ -110,7 +120,7 @@
   .grade::after {
     content: attr(data-tip); display: none;
     position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
-    background: #1f2328; color: #e6edf3; font-size: 11px; font-weight: 400; line-height: 1.5;
+    background: #1f2328; color: #e6edf3; font-size: calc(11px * var(--fscale, 1)); font-weight: 400; line-height: 1.5;
     padding: 6px 10px; border-radius: 6px; white-space: pre-wrap; max-width: 240px;
     z-index: 500; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,.25);
     text-transform: none; letter-spacing: 0;
@@ -126,13 +136,13 @@
   .rec-list { list-style: none; }
   .rec-item { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-start; }
   .rec-item:last-child { border-bottom: none; }
-  .rec-num { font-size: 10px; font-weight: 700; color: var(--text2); white-space: nowrap; margin-top: 2px; min-width: 28px; }
+  .rec-num { font-size: calc(10px * var(--fscale, 1)); font-weight: 700; color: var(--text2); white-space: nowrap; margin-top: 2px; min-width: 28px; }
   .rec-badges { display: flex; gap: 4px; flex-shrink: 0; margin-top: 1px; flex-wrap: nowrap; }
-  .rec-text { font-size: 12px; color: var(--text); line-height: 1.6; }
+  .rec-text { font-size: calc(12px * var(--fscale, 1)); color: var(--text); line-height: 1.6; }
   .rec-text strong { color: var(--accent2); }
 
   /* ── ALERT ── */
-  .alert { padding: 8px 12px; border-radius: 6px; font-size: 12px; margin: 8px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.55; }
+  .alert { padding: 8px 12px; border-radius: 6px; font-size: calc(12px * var(--fscale, 1)); margin: 8px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.55; }
   .alert-danger  { background: #ffebe9; border-left: 3px solid var(--red);    color: #82071e; }
   .alert-info    { background: #ddf4ff; border-left: 3px solid #0550ae;       color: #0550ae; }
   .alert-warn    { background: #fff8c5; border-left: 3px solid var(--yellow); color: #7d4e00; }
@@ -140,8 +150,8 @@
   .alert-blue    { background: #e8f0fa; border-left: 3px solid var(--accent); color: var(--accent2); }
 
   /* ── TABLE ── */
-  .tbl { width: 100%; border-collapse: collapse; font-size: 11px; }
-  .tbl th { background: var(--surface2); color: var(--text2); padding: 6px 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600; text-align: left; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: calc(11px * var(--fscale, 1)); }
+  .tbl th { background: var(--surface2); color: var(--text2); padding: 6px 8px; font-size: calc(10px * var(--fscale, 1)); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600; text-align: left; }
   .tbl td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
   .tbl tr:last-child td { border-bottom: none; }
   .tbl tr:hover td { background: rgba(0,0,0,.02); }
@@ -149,54 +159,54 @@
 
   /* ── ACCORDION ── */
   .acc { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; overflow: hidden; }
-  .acc-hdr { background: var(--surface2); padding: 7px 12px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .acc-hdr { background: var(--surface2); padding: 7px 12px; font-size: calc(12px * var(--fscale, 1)); font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
   .acc-hdr:hover { background: #e5e9ef; }
-  .acc-toggle { font-size: 11px; color: var(--text2); transition: transform .2s; }
+  .acc-toggle { font-size: calc(11px * var(--fscale, 1)); color: var(--text2); transition: transform .2s; }
   .acc-hdr.open .acc-toggle { transform: rotate(180deg); }
-  .acc-body { display: none; padding: 10px 12px; font-size: 12px; line-height: 1.65; }
+  .acc-body { display: none; padding: 10px 12px; font-size: calc(12px * var(--fscale, 1)); line-height: 1.65; }
   .acc-body ul { padding-left: 16px; margin: 4px 0; }
   .acc-body li { margin-bottom: 3px; }
 
   /* ── BADGE ── */
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: calc(10px * var(--fscale, 1)); font-weight: 600; white-space: nowrap; }
   .badge-micro { background: #e0f4f1; color: #0f5549; border: 1px solid #1a7f6e; }
   .badge-macro { background: #fce8eb; color: #9b1c2e; border: 1px solid #9b1c2e; }
   .badge-surg  { background: #ffebe9; color: #82071e; }
   .badge-obs   { background: #dafbe1; color: #116329; }
 
   /* ── PILL ── */
-  .pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+  .pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: calc(10px * var(--fscale, 1)); font-weight: 600; white-space: nowrap; }
   .pill-strong { background: #dafbe1; color: var(--green); }
   .pill-weak   { background: #ddf4ff; color: #0550ae; }
 
   /* ── FLOW ── */
-  .flow-box { border: 1.5px solid var(--border); border-radius: 6px; padding: 7px 12px; font-size: 11px; text-align: center; line-height: 1.4; font-weight: 600; background: var(--surface); }
+  .flow-box { border: 1.5px solid var(--border); border-radius: 6px; padding: 7px 12px; font-size: calc(11px * var(--fscale, 1)); text-align: center; line-height: 1.4; font-weight: 600; background: var(--surface); }
   .flow-box.blue   { border-color: var(--accent); background: #e8f0fa; color: var(--accent2); }
   .flow-box.green  { border-color: #1a7f37; background: #dafbe1; color: #116329; }
   .flow-box.yellow { border-color: #9a6700; background: #fff8c5; color: #7d4e00; }
   .flow-box.red    { border-color: var(--red); background: #ffebe9; color: #82071e; }
   .flow-box.gray   { border-color: var(--border); background: var(--surface2); color: var(--text); }
-  .flow-arrow { text-align: center; font-size: 16px; color: var(--text2); margin: 2px 0; line-height: 1; }
+  .flow-arrow { text-align: center; font-size: calc(16px * var(--fscale, 1)); color: var(--text2); margin: 2px 0; line-height: 1; }
   .flow-row   { display: flex; gap: 8px; align-items: flex-start; justify-content: center; margin: 4px 0; }
   .flow-row .flow-box { flex: 1; }
 
   /* ── ABBR ── */
   .abbr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px; }
   .abbr-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; }
-  .abbr-term { font-weight: 700; color: var(--accent2); font-size: 12px; font-family: 'Courier New', monospace; }
-  .abbr-def  { font-size: 11px; color: var(--text2); line-height: 1.45; }
+  .abbr-term { font-weight: 700; color: var(--accent2); font-size: calc(12px * var(--fscale, 1)); font-family: 'Courier New', monospace; }
+  .abbr-def  { font-size: calc(11px * var(--fscale, 1)); color: var(--text2); line-height: 1.45; }
 
   /* ── MRI SCHEDULE ── */
-  .mri-box { border-radius: 6px; padding: 10px 12px; font-size: 12px; text-align: center; }
+  .mri-box { border-radius: 6px; padding: 10px 12px; font-size: calc(12px * var(--fscale, 1)); text-align: center; }
   .mri-micro { background: #e0f4f1; border: 1.5px solid #1a7f6e; }
   .mri-macro { background: #fce8eb; border: 1.5px solid #9b1c2e; }
-  .mri-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .mri-title { font-weight: 700; font-size: calc(13px * var(--fscale, 1)); margin-bottom: 6px; }
 
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: #c8d0d9; border-radius: 3px; }
   .sec-sep { height: 1px; background: var(--border); margin: 10px 0; }
-  small { color: var(--text2); font-size: 10px; }
+  small { color: var(--text2); font-size: calc(10px * var(--fscale, 1)); }
 </style>
 </head>
 <body>
@@ -209,14 +219,15 @@
     </div>
     <div style="text-align:center;margin-top:3px;line-height:1.6">
       <a href="https://doi.org/10.1210/jc.2010-1048" class="source-link" target="_blank">J Clin Endocrinol Metab 2011;96(4):894–904 (Freda PU et al.) ↗</a>
-      <span style="color:var(--text2);font-size:11px"> · The Endocrine Society · 2011</span><br>
-      <span style="font-size:10px;color:var(--text2);font-style:italic">This tool is not officially endorsed by The Endocrine Society</span>
+      <span style="color:var(--text2);font-size: calc(11px * var(--fscale, 1))"> · The Endocrine Society · 2011</span><br>
+      <span style="font-size: calc(10px * var(--fscale, 1));color:var(--text2);font-style:italic">This tool is not officially endorsed by The Endocrine Society</span>
     </div>
   </div>
 </header>
 
 <div class="tab-bar">
   <div class="tab-bar-inner">
+    <div id="font-zoom-btn" class="font-zoom-btn" onclick="cycleFontZoom()"><span class="fz-icon">🔠</span><span id="font-zoom-label">100%</span></div>
     <div class="tab active" onclick="showTab('overview')">🏠 개요</div>
     <div class="tab" onclick="showTab('initial')">🔬 초기 평가</div>
     <div class="tab" onclick="showTab('followup')">📅 추적관찰</div>
@@ -224,11 +235,11 @@
     <div class="tab" onclick="showTab('flowchart')">🗺️ 알고리즘</div>
     <div class="tab-abbr-wrap">
       <div style="position:relative;display:flex;align-items:center;flex-shrink:0">
-        <span style="position:absolute;left:8px;color:var(--text2);font-size:12px;pointer-events:none">🔍</span>
+        <span style="position:absolute;left:8px;color:var(--text2);font-size: calc(12px * var(--fscale, 1));pointer-events:none">🔍</span>
         <input id="abbr-input" type="text" placeholder="약어 검색" oninput="filterAbbr(this.value)"
-          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 8px 4px 26px;color:var(--text);font-size:12px;width:130px;outline:none;"
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 8px 4px 26px;color:var(--text);font-size: calc(12px * var(--fscale, 1));width:130px;outline:none;"
           onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
-        <span id="abbr-count" style="position:absolute;right:7px;font-size:10px;color:var(--text2);pointer-events:none"></span>
+        <span id="abbr-count" style="position:absolute;right:7px;font-size: calc(10px * var(--fscale, 1));color:var(--text2);pointer-events:none"></span>
       </div>
       <div id="abbr-dropdown" style="display:none;position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px;width:440px;max-height:360px;overflow-y:auto;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.12)">
         <div id="abbr-grid-drop" style="display:grid;grid-template-columns:1fr"></div>
@@ -264,7 +275,7 @@
 
       <div class="grid2" style="margin-top:8px">
         <div>
-          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">원인 및 조직학적 분포</div>
+          <div style="font-weight:600;font-size: calc(12px * var(--fscale, 1));color:var(--accent2);margin-bottom:6px">원인 및 조직학적 분포</div>
           <table class="tbl">
             <tr><th>진단</th><th>비율</th></tr>
             <tr><td>뇌하수체 선종 (전체)</td><td>~91%</td></tr>
@@ -276,7 +287,7 @@
           </table>
         </div>
         <div>
-          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">역학 데이터</div>
+          <div style="font-weight:600;font-size: calc(12px * var(--fscale, 1));color:var(--accent2);margin-bottom:6px">역학 데이터</div>
           <table class="tbl">
             <tr><th>자료원</th><th>유병률</th></tr>
             <tr><td>부검 연구 (복합)</td><td>평균 10.6%</td></tr>
@@ -301,8 +312,8 @@
     <div class="card-body">
       <div class="grid3" style="gap:8px">
         <div style="background:#e8f0fa;border:1.5px solid var(--accent);border-radius:8px;padding:10px">
-          <div style="font-weight:700;color:var(--accent2);font-size:12px;margin-bottom:6px">1️⃣ 초기 평가 (1.0)</div>
-          <ul style="font-size:11px;padding-left:14px;line-height:2">
+          <div style="font-weight:700;color:var(--accent2);font-size: calc(12px * var(--fscale, 1));margin-bottom:6px">1️⃣ 초기 평가 (1.0)</div>
+          <ul style="font-size: calc(11px * var(--fscale, 1));padding-left:14px;line-height:2">
             <li>병력·신체검진 (호르몬과잉·뇌하수체기능저하)</li>
             <li><strong>호르몬 과잉</strong> 선별 검사 (모든 환자)</li>
             <li><strong>뇌하수체기능저하</strong> 선별 검사</li>
@@ -311,8 +322,8 @@
           </ul>
         </div>
         <div style="background:#e0f4f1;border:1.5px solid #1a7f6e;border-radius:8px;padding:10px">
-          <div style="font-weight:700;color:#0f5549;font-size:12px;margin-bottom:6px">2️⃣ 추적관찰 (2.0)</div>
-          <ul style="font-size:11px;padding-left:14px;line-height:2">
+          <div style="font-weight:700;color:#0f5549;font-size: calc(12px * var(--fscale, 1));margin-bottom:6px">2️⃣ 추적관찰 (2.0)</div>
+          <ul style="font-size: calc(11px * var(--fscale, 1));padding-left:14px;line-height:2">
             <li>대형: <strong>6개월</strong> 후 MRI → 이후 매년</li>
             <li>미세: <strong>1년</strong> 후 MRI → 1–2년 간격</li>
             <li>3년 후 변화 없으면 점차 간격 연장</li>
@@ -321,8 +332,8 @@
           </ul>
         </div>
         <div style="background:#fce8eb;border:1.5px solid #9b1c2e;border-radius:8px;padding:10px">
-          <div style="font-weight:700;color:#9b1c2e;font-size:12px;margin-bottom:6px">3️⃣ 수술 적응증 (3.0)</div>
-          <ul style="font-size:11px;padding-left:14px;line-height:2">
+          <div style="font-weight:700;color:#9b1c2e;font-size: calc(12px * var(--fscale, 1));margin-bottom:6px">3️⃣ 수술 적응증 (3.0)</div>
+          <ul style="font-size: calc(11px * var(--fscale, 1));padding-left:14px;line-height:2">
             <li><strong>강권고</strong>: 시야결손, 압박증상, 뇌하수체 졸중+시각장애</li>
             <li><strong>강권고</strong>: 시신경/교차 인접</li>
             <li><strong>강권고</strong>: 프롤락틴종 외 분비성 종양</li>
@@ -783,15 +794,15 @@
         <div class="flow-row" style="margin-top:4px">
           <div style="flex:1">
             <div class="flow-row">
-              <div class="flow-box yellow" style="font-size:10px">프롤락틴종<br>→ 도파민 작용제</div>
-              <div class="flow-box red" style="font-size:10px">기타 분비성<br>(GH·ACTH 등)<br>→ 수술/치료</div>
+              <div class="flow-box yellow" style="font-size: calc(10px * var(--fscale, 1))">프롤락틴종<br>→ 도파민 작용제</div>
+              <div class="flow-box red" style="font-size: calc(10px * var(--fscale, 1))">기타 분비성<br>(GH·ACTH 등)<br>→ 수술/치료</div>
             </div>
           </div>
           <div style="flex:1">
             <div class="flow-arrow">↓</div>
             <div class="flow-row">
-              <div class="flow-box green" style="font-size:10px">미세우연종<br>(&lt;1 cm)</div>
-              <div class="flow-box red" style="font-size:10px">대형우연종<br>(≥1 cm)ᵇ</div>
+              <div class="flow-box green" style="font-size: calc(10px * var(--fscale, 1))">미세우연종<br>(&lt;1 cm)</div>
+              <div class="flow-box red" style="font-size: calc(10px * var(--fscale, 1))">대형우연종<br>(≥1 cm)ᵇ</div>
             </div>
           </div>
         </div>
@@ -801,22 +812,22 @@
         <div class="flow-box yellow">수술 적응증 판단 (R.3.1–3.2)ᶜ<br><small style="font-weight:400">VF 이상·시신경 인접·졸중+시각장애·의미있는 성장 등</small></div>
         <div class="flow-row" style="margin-top:4px">
           <div style="flex:1">
-            <div class="flow-box red" style="font-size:10px">수술 적응증 있음 → <strong>수술</strong></div>
+            <div class="flow-box red" style="font-size: calc(10px * var(--fscale, 1))">수술 적응증 있음 → <strong>수술</strong></div>
           </div>
           <div style="flex:1">
-            <div class="flow-box green" style="font-size:10px">수술 적응증 없음 → <strong>보존적 추적</strong></div>
+            <div class="flow-box green" style="font-size: calc(10px * var(--fscale, 1))">수술 적응증 없음 → <strong>보존적 추적</strong></div>
           </div>
         </div>
 
         <!-- 보존 추적 -->
         <div class="flow-arrow">↓ 보존적 추적</div>
         <div class="flow-row">
-          <div class="flow-box" style="flex:1;border-color:#1a7f6e;background:#e0f4f1;font-size:10px">
+          <div class="flow-box" style="flex:1;border-color:#1a7f6e;background:#e0f4f1;font-size: calc(10px * var(--fscale, 1))">
             <strong style="color:#0f5549">미세우연종ᶠ</strong><br>
             MRI 1년 후<br>이후 1–2년 × 3년<br>→ 점차 연장<br>
             VFᵈ, 내분비ᵉ 필요 시
           </div>
-          <div class="flow-box" style="flex:1;border-color:#9b1c2e;background:#fce8eb;font-size:10px">
+          <div class="flow-box" style="flex:1;border-color:#9b1c2e;background:#fce8eb;font-size: calc(10px * var(--fscale, 1))">
             <strong style="color:#9b1c2e">대형우연종ᵍ</strong><br>
             MRI 6개월 후<br>이후 매년 × 3년<br>→ 점차 연장<br>
             VFᵈ + 내분비ᵉ (6개월·매년)
@@ -828,7 +839,7 @@
 
       </div>
 
-      <div style="margin-top:12px;font-size:10px;color:var(--text2);line-height:1.8">
+      <div style="margin-top:12px;font-size: calc(10px * var(--fscale, 1));color:var(--text2);line-height:1.8">
         <strong>각주:</strong><br>
         ᵃ 기저 평가: 호르몬 과잉·기능저하 병력·신체검진·혈액검사<br>
         ᵇ 큰 미세우연종(6–9 mm)은 대형우연종처럼 관리 가능<br>
@@ -850,7 +861,7 @@
     <div class="card-body">
       <div class="grid2" style="gap:10px">
         <div>
-          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">🔴 대형우연종 (353명 복합 데이터)</div>
+          <div style="font-weight:600;font-size: calc(12px * var(--fscale, 1));color:var(--accent2);margin-bottom:6px">🔴 대형우연종 (353명 복합 데이터)</div>
           <table class="tbl">
             <tr><th>결과</th><th>발생</th></tr>
             <tr><td>종양 크기 증가</td><td>85/353명 (<strong>24%</strong>)</td></tr>
@@ -860,7 +871,7 @@
           </table>
         </div>
         <div>
-          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px">🟢 미세우연종 (160명 복합 데이터)</div>
+          <div style="font-weight:600;font-size: calc(12px * var(--fscale, 1));color:var(--accent2);margin-bottom:6px">🟢 미세우연종 (160명 복합 데이터)</div>
           <table class="tbl">
             <tr><th>결과</th><th>발생</th></tr>
             <tr><td>종양 크기 증가</td><td>17/160명 (<strong>10.6%</strong>)<br>추적 2.3–7년</td></tr>
@@ -892,6 +903,20 @@
 </div><!-- /main -->
 
 <script>
+const FONT_ZOOM_LEVELS = [1, 1.25, 1.5];
+let fontZoomIndex = 0;
+
+function applyFontZoom(scale) {
+  document.documentElement.style.setProperty('--fscale', scale);
+  const label = document.getElementById('font-zoom-label');
+  if (label) label.textContent = Math.round(scale * 100) + '%';
+}
+
+function cycleFontZoom() {
+  fontZoomIndex = (fontZoomIndex + 1) % FONT_ZOOM_LEVELS.length;
+  applyFontZoom(FONT_ZOOM_LEVELS[fontZoomIndex]);
+}
+
 const ABBR_DATA = [
   { term:"ACTH",  def:"Adrenocorticotropic Hormone — 부신피질자극호르몬" },
   { term:"CT",    def:"Computed Tomography — 전산화 단층촬영" },
